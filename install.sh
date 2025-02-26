@@ -8,6 +8,7 @@ setup_arch() {
     sudo systemctl enable --now libvirtd
     sudo usermod -a -G libvirt $(whoami)
     sudo virsh net-autostart default
+    sudo virsh net-startdefault
     newgrp libvirt
     echo "Virtualization setup complete for Arch Linux!"
 }
@@ -19,6 +20,7 @@ setup_debian() {
     sudo apt install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager
     sudo sed -i 's/^#\(unix_sock_group = "libvirt"\)/\1/; s/^#\(unix_sock_rw_perms = "0770"\)/\1/' /etc/libvirt/libvirtd.conf
     sudo virsh net-autostart default
+    sudo virsh net-startdefault
     sudo systemctl enable --now libvirtd
     sudo usermod -aG libvirt $(whoami)
     newgrp libvirt
@@ -32,6 +34,7 @@ setup_fedora() {
     sudo sed -i 's/^#\(unix_sock_group = "libvirt"\)/\1/; s/^#\(unix_sock_rw_perms = "0770"\)/\1/' /etc/libvirt/libvirtd.conf
     sudo systemctl enable --now libvirtd
     sudo virsh net-autostart default
+    sudo virsh net-startdefault
     sudo usermod -aG libvirt $(whoami)
     newgrp libvirt
     echo "Virtualization setup complete for Fedora!"
